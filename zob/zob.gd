@@ -36,7 +36,9 @@ func _process(delta):
 	if mov.y < -wank_threshold:
 		down = true
 	elif mov.y > wank_threshold and down:
+		down = false
 		sperm_level += 1
+		play_random_fap()
 
 func _input(event):
 	left = Input.is_action_pressed("ui_left")
@@ -45,6 +47,7 @@ func _input(event):
 		down = true
 	elif Input.is_action_pressed("ui_up") and down:
 		sperm_level += 1
+		play_random_fap()
 	if Input.is_action_pressed("Space"):
 		fire_action = true
 	if left and right:
@@ -71,3 +74,7 @@ func fire():
 		get_tree().get_root().add_child(spread)
 		sperm_level -= 1
 	fire_action = false
+	
+func play_random_fap():
+	var i = randi() % 7
+	get_node("zob_player").play("fap"+str(i))
