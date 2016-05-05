@@ -2,22 +2,21 @@ extends Node2D
 
 var egg_scn = preload("res://egg/egg.scn")
 var stain_scn = preload("res://stain/stain.scn")
-var progress
-var lastEggTime = 0
-const eggSpawnDelay = 1
-const egg_margin = 50
+var viagra_scn = preload("res://viagra/viagra.scn")
+onready var progress = get_node("progress")
+onready var g = get_node("/root/global")
+var last_spawn_time = 0
+const spawn_delay = 1
+const spawn_margin = 50
 const max_time = 60
 const VIAGRA_BOOST = 100
 var fire_hit = false
 var fire_last = 0
 # viewport width
 var width
-var g
 
 func _ready():
-	progress = get_node("progress")
 	progress.set_max_time(max_time)
-	g = get_node("/root/global")
 	add_user_signal("zob_hit")
 	add_user_signal('kill_egg')
 	add_user_signal("viagra_hit")
@@ -29,10 +28,10 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
-	lastEggTime += delta
-	if lastEggTime > eggSpawnDelay:
-		lastEggTime = 0
-		spawnEgg()
+	last_spawn_time += delta
+	if last_spawn_time > spawn_delay:
+		last_spawn_time = 0
+		spawn()
 	get_node("score_label").set_text(str(g.score))
 	get_node("Node2D/ProgressBar").set_value(get_node("zob").sperm_level)
 	g.play_time += delta
@@ -52,10 +51,15 @@ func _on_kill_egg(position):
 func _on_viagra_hit():
 	get_node("zob").sperm_level += VIAGRA_BOOST
 
-func spawnEgg():
-	var egg = egg_scn.instance()
-	add_child(egg)
-	egg.set_pos(Vector2(rand_range(egg_margin, width-egg_margin), -20))
+func spawn():
+	var r = rand_range(0, 1)
+	var instance
+	if r > 0.95:
+		instance = viagra_scn.instance()
+	else:
+		instance = egg_scn.instance()
+	add_child(instance)
+	instance.set_pos(Vector2(rand_range(spawn_margin, width-spawn_margin), -20))
 	
 func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
