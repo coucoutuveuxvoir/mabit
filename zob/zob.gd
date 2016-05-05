@@ -48,6 +48,7 @@ func _input(event):
 	elif Input.is_action_pressed("ui_up") and down:
 		sperm_level += 1
 		play_random_fap()
+		down = false
 	if Input.is_action_pressed("Space"):
 		fire_action = true
 	if left and right:
@@ -57,7 +58,7 @@ func _input(event):
 		fire_action = true
 		
 func fire():
-	if sperm_level >= 1:
+	if sperm_level > 0:
 		get_node("zob_player").play("splouch")
 		var sperm = sperm_scn.instance()
 		var sperm_pos = sperm.get_pos()
