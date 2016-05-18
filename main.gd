@@ -33,7 +33,7 @@ func _process(delta):
 		last_spawn_time = 0
 		spawn()
 	get_node("score_label").set_text(str(g.score))
-	get_node("Node2D/ProgressBar").set_value(get_node("zob").sperm_level)
+	get_node("ProgressBar").set_value(get_node("zob").sperm_level)
 	g.play_time += delta
 	if (g.play_time >= max_time):
 		_on_play_end()

@@ -12,7 +12,6 @@ var right = false
 var down = false
 var up = false
 var fire_action = false;
-
 var sperm_level = 0
 
 func _ready():
