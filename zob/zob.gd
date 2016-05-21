@@ -6,7 +6,8 @@ const wank_threshold = 10
 
 var sperm_scn = preload("res://sperm/sperm.scn")
 var spread_scn = preload("res://spread/spread.scn")
-var anim
+onready var anim = get_node("sprite")
+onready var balls = get_node("balls")
 var left = false
 var right = false
 var down = false
@@ -15,12 +16,12 @@ var fire_action = false;
 var sperm_level = 0
 
 func _ready():
-	anim = get_node("sprite")
 	set_meta("zob", true)
 	set_process(true)
 	set_process_input(true)
 
 func _process(delta):
+	set_balls()
 	if fire_action:
 		fire()
 	var mov = Input.get_accelerometer()
@@ -78,3 +79,20 @@ func fire():
 func play_random_fap():
 	var i = randi() % 7
 	get_node("zob_player").play("fap"+str(i))
+
+# Set balls frame according to sperm level
+func set_balls():
+	if sperm_level == 0:
+		balls.set_frame(0)
+	elif sperm_level < 10:
+		balls.set_frame(1)
+	elif sperm_level < 20:
+		balls.set_frame(2)
+	elif sperm_level < 30:
+		balls.set_frame(3)
+	elif sperm_level < 40:
+		balls.set_frame(4)
+	elif sperm_level < 50:
+		balls.set_frame(5)
+	else:
+		balls.set_frame(6)
