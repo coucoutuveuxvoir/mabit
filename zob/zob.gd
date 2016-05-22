@@ -6,8 +6,9 @@ const wank_threshold = 10
 
 var sperm_scn = preload("res://sperm/sperm.scn")
 var spread_scn = preload("res://spread/spread.scn")
-onready var anim = get_node("sprite")
 onready var balls = get_node("balls")
+onready var penis = get_node("penis")
+onready var cover = get_node("cover")
 var left = false
 var right = false
 var down = false
@@ -27,12 +28,15 @@ func _process(delta):
 	var mov = Input.get_accelerometer()
 	if left or mov.x > accel_threshold:
 		move(Vector2(-velocity*delta, 0))
-		anim.set_frame(1)
+		penis.set_frame(1)
+		cover.set_frame(1)
 	elif right or mov.x < -accel_threshold:
 		move(Vector2(velocity*delta, 0))
-		anim.set_frame(2)
+		penis.set_frame(2)
+		cover.set_frame(2)
 	else:
-		anim.set_frame(0)
+		penis.set_frame(0)
+		cover.set_frame(0)
 	if mov.y < -wank_threshold:
 		down = true
 	elif mov.y > wank_threshold and down:
