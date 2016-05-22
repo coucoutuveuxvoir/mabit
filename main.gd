@@ -16,6 +16,8 @@ var fire_last = 0
 var width
 
 func _ready():
+	g.play_time = 0
+	g.score = 0
 	progress.set_max_time(max_time)
 	add_user_signal("zob_hit")
 	add_user_signal('kill_egg')
