@@ -17,6 +17,7 @@ var fire_action = false;
 var sperm_level = 0
 
 func _ready():
+	add_user_signal("sperm_increase")
 	set_meta("zob", true)
 	set_process(true)
 	set_process_input(true)
@@ -51,6 +52,7 @@ func _input(event):
 		down = true
 	elif Input.is_action_pressed("ui_up") and down:
 		sperm_level += 1
+		emit_signal("sperm_increase", sperm_level)
 		play_random_fap()
 		down = false
 	if Input.is_action_pressed("Space"):
