@@ -67,4 +67,5 @@ func _notification(what):
 		g.goto_scene("res://menu/menu.scn")
 		
 func _on_play_end():
+	g.save_game()
 	g.goto_scene("res://menu/menu.scn")
