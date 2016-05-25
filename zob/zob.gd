@@ -18,6 +18,7 @@ var sperm_level = 0
 
 func _ready():
 	add_user_signal("sperm_increase")
+	add_user_signal("sperm_decrease")
 	set_meta("zob", true)
 	set_process(true)
 	set_process_input(true)
@@ -80,6 +81,7 @@ func fire():
 		spread.set_pos(spread_pos)
 		get_tree().get_root().add_child(spread)
 		sperm_level -= 1
+		emit_signal("sperm_decrease", sperm_level)
 	fire_action = false
 	
 func play_random_fap():

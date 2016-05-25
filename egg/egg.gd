@@ -3,6 +3,7 @@ extends Area2D
 const velocity = 100
 var rot_speed = 0.01 * sign(rand_range(-1, 1))
 var stain_scn = preload('res://stain/stain.scn')
+onready var g = get_node("/root/global")
 
 func _ready():
 	rotate(rand_range(0, 6.28))
@@ -15,7 +16,7 @@ func _process(delta):
 
 func _on_egg_body_enter( body ):
 	if body.has_meta('zob'):
-		get_node('/root/world').emit_signal("zob_hit")
+		g.emit_signal("zob_hit")
 	if body.has_meta("jizz"):
 		body.queue_free()
 		kill_egg()
@@ -23,5 +24,5 @@ func _on_egg_body_enter( body ):
 		queue_free()
 
 func kill_egg():
-	get_node('/root/world').emit_signal('kill_egg', get_pos())
+	g.emit_signal('kill_egg', get_pos())
 	queue_free()

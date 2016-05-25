@@ -5,6 +5,7 @@ var stain_scn = preload("res://stain/stain.scn")
 var viagra_scn = preload("res://viagra/viagra.scn")
 onready var progress = get_node("progress")
 onready var g = get_node("/root/global")
+onready var width = get_tree().get_root().get_rect().size.x
 var last_spawn_time = 0
 const spawn_delay = 1
 const spawn_margin = 50
@@ -12,20 +13,17 @@ const max_time = 60
 const VIAGRA_BOOST = 100
 var fire_hit = false
 var fire_last = 0
-# viewport width
-var width
 
 func _ready():
 	g.play_time = 0
 	g.score = 0
 	progress.set_max_time(max_time)
-	add_user_signal("zob_hit")
-	add_user_signal('kill_egg')
+	g.add_user_signal("zob_hit")
+	g.add_user_signal('kill_egg')
 	add_user_signal("viagra_hit")
-	connect("zob_hit", self, "_on_zob_hit")
-	connect('kill_egg', self, '_on_kill_egg')
+	g.connect("zob_hit", self, "_on_zob_hit")
+	g.connect('kill_egg', self, '_on_kill_egg')
 	connect("viagra_hit", self, "_on_viagra_hit")
-	width = get_tree().get_root().get_rect().size.x
 	get_node("bottom").set_meta("void", true)
 	set_process(true)
 
