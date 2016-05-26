@@ -44,6 +44,7 @@ func _process(delta):
 	elif mov.y > wank_threshold and down:
 		down = false
 		sperm_level += 1
+		emit_signal("sperm_increase", sperm_level)
 		play_random_fap()
 
 func _input(event):
