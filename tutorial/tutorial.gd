@@ -53,3 +53,6 @@ func _on_move_sensor_body_enter( body ):
 
 func on_egg_touch(position):
 	touched_egg += 1
+
+func _on_end_btn_pressed():
+	g.goto_scene("res://menu/menu.scn")
