@@ -2,6 +2,7 @@ extends Node2D
 
 var egg_scn = preload("res://egg/egg.scn")
 var stain_scn = preload("res://stain/stain.scn")
+var popscore_scn = preload("res://ui/popscore/popscore.scn")
 var viagra_scn = preload("res://viagra/viagra.scn")
 onready var progress = get_node("progress")
 onready var g = get_node("/root/global")
@@ -41,11 +42,16 @@ func _on_zob_hit():
 	g.score = 0
 
 func _on_kill_egg(position):
+	var bonus = 1
 	get_node("snd_player").play("pop")
 	var stain = stain_scn.instance()
+	var popscore = popscore_scn.instance()
+	popscore.score = bonus
 	add_child(stain)
+	add_child(popscore)
 	stain.set_pos(position)
-	g.score += 1
+	popscore.set_pos(position)
+	g.score += bonus
 	
 func _on_viagra_hit():
 	get_node("zob").sperm_level += VIAGRA_BOOST
