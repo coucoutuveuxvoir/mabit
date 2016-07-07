@@ -53,8 +53,14 @@ func _on_kill_egg(position):
 	popscore.set_pos(position)
 	g.score += bonus
 	
-func _on_viagra_hit():
+func _on_viagra_hit(position):
+	var bonus = 50
 	get_node("zob").sperm_level += VIAGRA_BOOST
+	var popscore = popscore_scn.instance()
+	popscore.score = bonus
+	popscore.set_pos(position)
+	add_child(popscore)
+	g.score += bonus
 
 func spawn():
 	var r = rand_range(0, 1)

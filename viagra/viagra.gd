@@ -18,5 +18,5 @@ func _on_viagra_body_enter( body ):
 		queue_free()
 
 func catch_bonus():
-	get_node("/root/world").emit_signal("viagra_hit")
+	get_node("/root/world").emit_signal("viagra_hit", get_pos())
 	queue_free()
