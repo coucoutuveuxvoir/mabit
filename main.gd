@@ -7,13 +7,19 @@ var viagra_scn = preload("res://viagra/viagra.scn")
 onready var progress = get_node("progress")
 onready var g = get_node("/root/global")
 onready var width = get_tree().get_root().get_rect().size.x
+onready var timer = get_node("Timer")
 var last_spawn_time = 0
 const spawn_delay = 1
 const spawn_margin = 50
 const max_time = 60
 const VIAGRA_BOOST = 100
+# Max time between two hits to be considered a combo
+const COMBO_TIME = 1
 var fire_hit = false
 var fire_last = 0
+var last_hit = 0
+var prev_chain = 1
+var combo_chain = 1
 
 func _ready():
 	g.play_time = 0
@@ -37,30 +43,30 @@ func _process(delta):
 	g.play_time += delta
 	if (g.play_time >= max_time):
 		_on_play_end()
+	if (prev_chain != combo_chain):
+		timer.stop()
+		timer.start()
+	prev_chain = combo_chain
 
 func _on_zob_hit():
 	g.score = 0
 
 func _on_kill_egg(position):
-	var bonus = 1
+	var bonus = combo_chain
 	get_node("snd_player").play("pop")
 	var stain = stain_scn.instance()
-	var popscore = popscore_scn.instance()
-	popscore.score = bonus
+	show_popscore(bonus, position)
 	add_child(stain)
-	add_child(popscore)
 	stain.set_pos(position)
-	popscore.set_pos(position)
 	g.score += bonus
+	combo_chain += 1
 	
 func _on_viagra_hit(position):
 	var bonus = 50
 	get_node("zob").sperm_level += VIAGRA_BOOST
-	var popscore = popscore_scn.instance()
-	popscore.score = bonus
-	popscore.set_pos(position)
-	add_child(popscore)
+	show_popscore(bonus, position)
 	g.score += bonus
+	combo_chain += 1
 
 func spawn():
 	var r = rand_range(0, 1)
@@ -72,6 +78,12 @@ func spawn():
 	add_child(instance)
 	instance.set_pos(Vector2(rand_range(spawn_margin, width-spawn_margin), -20))
 	
+func show_popscore(score, position):
+	var popscore = popscore_scn.instance()
+	popscore.score = score
+	popscore.set_pos(position)
+	add_child(popscore)
+	
 func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
 		g.goto_scene("res://menu/menu.scn")
@@ -79,3 +91,7 @@ func _notification(what):
 func _on_play_end():
 	g.save_game()
 	g.goto_scene("res://menu/menu.scn")
+
+func _on_Timer_timeout():
+	combo_chain = 1
+	prev_chain = 1
