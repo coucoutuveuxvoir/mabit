@@ -7,7 +7,7 @@ var score = 0
 var play_time = 0
 var first_time = false
 var highscore_names = ["Zob", "Zob", "Zob", "Zob", "Zob"]
-var highscore_scores = [500, 300, 250, 100, 10]
+var highscore_scores = [500, 300, 250, 100, 0]
 
 func _ready():
 	var root = get_tree().get_root()
@@ -45,3 +45,21 @@ func load_game():
 	highscore_names = data["highscore_names"]
 	highscore_scores = data["highscore_scores"]
 	savegame.close()
+	
+func is_highscore():
+	for i in highscore_scores:
+		if score > i:
+			return true
+	return false
+	
+func add_highscore(score, name):
+	var new_scores = []
+	var new_names = []
+	for i in range(highscore_scores.size()):
+		if score >= highscore_scores[i]:
+			new_scores.append(score)
+			new_names.append(name)
+		new_scores.append(highscore_scores[i])
+		new_names.append(highscore_names[i])
+	highscore_names = new_names
+	highscore_scores = new_scores

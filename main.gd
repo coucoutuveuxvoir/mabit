@@ -90,7 +90,7 @@ func _notification(what):
 		
 func _on_play_end():
 	g.save_game()
-	g.goto_scene("res://menu/menu.scn")
+	g.goto_scene("res://summary/summary.scn")
 
 func _on_Timer_timeout():
 	combo_chain = 1
