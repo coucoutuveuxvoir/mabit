@@ -18,7 +18,7 @@ func _ready():
 	set_step(0)
 
 func _on_shake(level):
-	if level > 10 and current_step == 0:
+	if level > 5 and current_step == 0:
 		set_step(1)
 		
 func _on_empty(level):
@@ -33,7 +33,9 @@ func set_step(n):
 			node.hide()
 		else:
 			node.show()
-	if n == 3:
+	if n == 1:
+		get_node("mvmnt_block").queue_free()
+	elif n == 3:
 		set_process(true)
 		
 func _process(delta):
