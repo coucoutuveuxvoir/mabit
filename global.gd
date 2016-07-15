@@ -61,5 +61,7 @@ func add_highscore(score, name):
 			new_names.append(name)
 		new_scores.append(highscore_scores[i])
 		new_names.append(highscore_names[i])
+	new_names.resize(5)
+	new_scores.resize(5)
 	highscore_names = new_names
 	highscore_scores = new_scores
