@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const velocity = 200
+const velocity = 350
 const accel_threshold = 2
 const wank_threshold = 10
 
