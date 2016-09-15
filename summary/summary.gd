@@ -13,4 +13,7 @@ func _ready():
 func _on_Button_pressed():
 	if g.is_highscore():
 		g.add_highscore(g.score, name.get_text())
-	g.goto_scene("res://menu/menu.scn")
+		g.save_game()
+		g.goto_scene("res://highscores/highscores.scn")
+	else:
+		g.goto_scene("res://menu/menu.scn")

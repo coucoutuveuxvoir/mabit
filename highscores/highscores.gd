@@ -6,9 +6,9 @@ var scores
 onready var g = get_node("/root/global")
 
 func _ready():
-	for i in range(1, NUM_SCORE+1):
-		get_node("score_line_"+str(i)).get_node("name").set_text(g.highscore_names[i-1])
-		get_node("score_line_"+str(i)).get_node("score").set_text(str(g.highscore_scores[i-1]))
+	for i in range(0, NUM_SCORE):
+		get_node("score_line_"+str(i)).get_node("name").set_text(g.highscore_names[i])
+		get_node("score_line_"+str(i)).get_node("score").set_text(str(g.highscore_scores[i]))
 
 
 func _on_back_btn_pressed():

@@ -49,7 +49,7 @@ func _process(delta):
 	prev_chain = combo_chain
 
 func _on_zob_hit():
-	g.score = 0
+	g.score -= 10
 
 func _on_kill_egg(position):
 	var bonus = combo_chain
@@ -89,7 +89,6 @@ func _notification(what):
 		g.goto_scene("res://menu/menu.scn")
 		
 func _on_play_end():
-	g.save_game()
 	g.goto_scene("res://summary/summary.scn")
 
 func _on_Timer_timeout():

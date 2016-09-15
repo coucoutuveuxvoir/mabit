@@ -38,13 +38,12 @@ func load_game():
 	var savegame = File.new()
 	if not savegame.file_exists(SAVEFILE):
 		first_time = true
-		return
-	var curLine = {}
-	savegame.open_encrypted_with_pass(SAVEFILE, File.READ, OS.get_unique_ID())
-	var data = savegame.get_var()
-	highscore_names = data["highscore_names"]
-	highscore_scores = data["highscore_scores"]
-	savegame.close()
+	else:
+		savegame.open_encrypted_with_pass(SAVEFILE, File.READ, OS.get_unique_ID())
+		var data = savegame.get_var()
+		highscore_names = data["highscore_names"]
+		highscore_scores = data["highscore_scores"]
+		savegame.close()
 	
 func is_highscore():
 	for i in highscore_scores:
@@ -55,10 +54,12 @@ func is_highscore():
 func add_highscore(score, name):
 	var new_scores = []
 	var new_names = []
+	var inserted = false
 	for i in range(highscore_scores.size()):
-		if score >= highscore_scores[i]:
+		if score >= highscore_scores[i] and not inserted:
 			new_scores.append(score)
 			new_names.append(name)
+			inserted = true
 		new_scores.append(highscore_scores[i])
 		new_names.append(highscore_names[i])
 	new_names.resize(5)
