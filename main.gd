@@ -1,7 +1,6 @@
 extends Node2D
 
 var egg_scn = preload("res://egg/egg.scn")
-var stain_scn = preload("res://stain/stain.scn")
 var popscore_scn = preload("res://ui/popscore/popscore.scn")
 var viagra_scn = preload("res://viagra/viagra.scn")
 onready var progress = get_node("progress")
@@ -54,10 +53,7 @@ func _on_zob_hit():
 func _on_kill_egg(position):
 	var bonus = combo_chain
 	get_node("snd_player").play("pop")
-	var stain = stain_scn.instance()
 	show_popscore(bonus, position)
-	add_child(stain)
-	stain.set_pos(position)
 	g.score += bonus
 	combo_chain += 1
 	

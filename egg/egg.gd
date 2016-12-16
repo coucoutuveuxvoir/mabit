@@ -1,4 +1,4 @@
-extends Area2D
+extends Node2D
 
 const velocity = 100
 var rot_speed = 0.01 * sign(rand_range(-1, 1))
@@ -21,8 +21,12 @@ func _on_egg_body_enter( body ):
 		body.queue_free()
 		kill_egg()
 	if body.has_meta("void"):
+		# Delete eggs off screen
 		queue_free()
 
 func kill_egg():
+	set_process(false)
 	g.emit_signal('kill_egg', get_pos())
-	queue_free()
+	get_node("egg").queue_free()
+	var stain = stain_scn.instance()
+	add_child(stain)
